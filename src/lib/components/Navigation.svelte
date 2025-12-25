@@ -117,6 +117,13 @@
 			</button>
 
 			<div class="nav-links" class:open={mobileMenuOpen}>
+				<a
+					href="/visualizer"
+					class:active={$page.url.pathname === '/visualizer'}
+					on:click={closeMobileMenu}
+				>
+					Visualizer
+				</a>
 				{#if user}
 					{#if user.isOwner}
 						<a
