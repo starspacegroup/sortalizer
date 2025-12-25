@@ -28,7 +28,7 @@ describe('SoundGenerator', () => {
 			close: vi.fn()
 		};
 
-		(global as any).AudioContext = vi.fn(() => mockAudioContext) as any;
+		(globalThis as any).AudioContext = vi.fn(() => mockAudioContext) as any;
 		soundGenerator = new SoundGenerator();
 	});
 

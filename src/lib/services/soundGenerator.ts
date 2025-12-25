@@ -7,6 +7,7 @@ export class SoundGenerator {
 	private audioContext: AudioContext | null = null;
 	private volume: number = 0.3;
 	private muted: boolean = false;
+	private activeTimeouts: number[] = [];
 
 	constructor() {
 		if (typeof window !== 'undefined' && 'AudioContext' in window) {
@@ -61,7 +62,8 @@ export class SoundGenerator {
 		const freq2 = this.valueToFrequency(value2, maxValue);
 
 		this.playTone(freq1, 0.05);
-		setTimeout(() => this.playTone(freq2, 0.05), 25);
+		const timeoutId = window.setTimeout(() => this.playTone(freq2, 0.05), 25);
+		this.activeTimeouts.push(timeoutId);
 	}
 
 	/**
@@ -114,6 +116,10 @@ export class SoundGenerator {
 	 * Clean up audio context
 	 */
 	dispose(): void {
+		// Clear all active timeouts
+		this.activeTimeouts.forEach((id) => clearTimeout(id));
+		this.activeTimeouts = [];
+
 		if (this.audioContext) {
 			this.audioContext.close();
 			this.audioContext = null;

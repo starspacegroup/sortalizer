@@ -122,7 +122,7 @@
 	function playAnimation() {
 		if (intervalId) clearInterval(intervalId);
 
-		intervalId = window.setInterval(() => {
+		intervalId = setInterval(() => {
 			if (!isPlaying || currentStep >= steps.length) {
 				pause();
 				if (currentStep >= steps.length) {

@@ -31,7 +31,7 @@ class MockAudioContext {
 describe('SortingVisualizer', () => {
 	beforeEach(() => {
 		// Mock AudioContext
-		(global as any).AudioContext = MockAudioContext;
+		(globalThis as any).AudioContext = MockAudioContext;
 		vi.clearAllTimers();
 	});
 
