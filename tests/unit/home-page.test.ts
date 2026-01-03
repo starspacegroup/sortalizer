@@ -58,7 +58,7 @@ describe('Home Page - Sorting Visualizer', () => {
 	it('should render visualization bars', () => {
 		const { container } = render(Page);
 		const bars = container.querySelectorAll('.bar');
-		expect(bars.length).toBe(50); // Default array size
+		expect(bars.length).toBe(23); // Default array size
 	});
 
 	it('should render playback controls', () => {

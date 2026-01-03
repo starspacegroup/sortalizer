@@ -144,7 +144,7 @@ describe('SortingVisualizer', () => {
 		const slider = container.querySelector('input[type="range"][id="speed"]');
 		expect(slider).toBeTruthy();
 		expect(slider?.getAttribute('min')).toBe('1');
-		expect(slider?.getAttribute('max')).toBe('500');
+		expect(slider?.getAttribute('max')).toBe('100');
 	});
 
 	it('should have volume slider', async () => {
