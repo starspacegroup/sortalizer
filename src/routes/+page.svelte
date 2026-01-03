@@ -228,9 +228,6 @@
 		} else if (e.code === 'KeyR') {
 			e.preventDefault();
 			stop();
-		} else if (e.code === 'KeyN') {
-			e.preventDefault();
-			generateNewArray();
 		} else if (e.code === 'KeyM') {
 			e.preventDefault();
 			toggleMute();
@@ -328,12 +325,6 @@
 		<div class="control-bar">
 			<!-- Left: Array controls -->
 			<div class="control-group">
-				<button class="btn btn-icon" on:click={generateNewArray} disabled={isPlaying} title="New Array (N)">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
-						<path d="M21 3v5h-5" />
-					</svg>
-				</button>
 				<button class="btn btn-icon" on:click={shuffle} disabled={isPlaying} title="Shuffle">
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
@@ -500,7 +491,6 @@
 			<span class="shortcuts-title">Keyboard</span>
 			<div class="shortcut"><kbd>Space</kbd> Play/Pause</div>
 			<div class="shortcut"><kbd>R</kbd> Reset</div>
-			<div class="shortcut"><kbd>N</kbd> New Array</div>
 			<div class="shortcut"><kbd>M</kbd> Mute</div>
 		</div>
 	</footer>
