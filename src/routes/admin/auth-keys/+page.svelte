@@ -161,7 +161,7 @@
 </script>
 
 <svelte:head>
-	<title>Authentication Keys - Admin - NebulaKit</title>
+	<title>Authentication Keys - Admin - Sortalizer</title>
 </svelte:head>
 
 <div class="auth-keys-page">
@@ -622,7 +622,6 @@
 		margin-bottom: var(--spacing-md);
 	}
 
-	.key-field label,
 	.key-field .label {
 		display: block;
 		font-size: 0.875rem;

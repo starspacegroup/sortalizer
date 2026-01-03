@@ -55,7 +55,7 @@
 </script>
 
 <svelte:head>
-	<title>Sign In - NebulaKit</title>
+	<title>Sign In - Sortalizer</title>
 </svelte:head>
 
 <div class="auth-page">

@@ -1,13 +1,13 @@
-name = "nebulakit"
+name = "sortalizer"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = ".svelte-kit/cloudflare"
 
 # D1 Database
-# Create with: wrangler d1 create nebulakit-db
+# Create with: wrangler d1 create sortalizer-db
 # Then replace the database_id below with the actual ID
 [[d1_databases]]
 binding = "DB"
-database_name = "nebulakit-db"
+database_name = "sortalizer-db"
 database_id = "bd776be3-9823-4763-abb1-c18b40931456"
 
 # KV Namespace
@@ -18,15 +18,15 @@ binding = "KV"
 id = "12a6576334dd4e16bf1e08d5cc1fac4a"
 preview_id = "e9b0a93432b1406786dc7b9b334da90d"
 # R2 Bucket
-# Create with: wrangler r2 bucket create nebulakit-files
+# Create with: wrangler r2 bucket create sortalizer-files
 [[r2_buckets]]
 binding = "BUCKET"
-bucket_name = "nebulakit-files"
+bucket_name = "sortalizer-files"
 
 # Queue (disabled - enable Queues at https://dash.cloudflare.com before uncommenting)
 # [[queues.producers]]
 # binding = "QUEUE"
-# queue = "nebulakit-queue"
+# queue = "sortalizer-queue"
 
 # Note: queues.consumers is not supported by Cloudflare Pages
 # If you need queue consumers, use a separate Cloudflare Worker

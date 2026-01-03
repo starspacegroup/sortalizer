@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for NebulaKit
+# GitHub Copilot Instructions for Sortalizer
 
 ## 🖥️ Development Environment Assumptions
 
@@ -153,7 +153,7 @@ npm run dev
 ## 📁 Project Structure
 
 ```
-NebulaKit/
+Sortalizer/
 ├── src/
 │   ├── lib/
 │   │   ├── components/      # Svelte components (with .test.ts files)

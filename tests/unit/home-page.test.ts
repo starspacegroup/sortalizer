@@ -1,140 +1,192 @@
-import { goto } from '$app/navigation';
-import { showCommandPalette } from '$lib/stores/commandPalette';
 import { fireEvent, render, screen } from '@testing-library/svelte';
-import { get } from 'svelte/store';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Page from '../../src/routes/+page.svelte';
 
-// Mock $app/navigation
-vi.mock('$app/navigation', () => ({
-	goto: vi.fn()
+// Mock the sound generator
+vi.mock('$lib/services/soundGenerator', () => ({
+	SoundGenerator: vi.fn().mockImplementation(() => ({
+		setVolume: vi.fn(),
+		setMuted: vi.fn(),
+		playComparison: vi.fn(),
+		playSwap: vi.fn(),
+		dispose: vi.fn()
+	}))
 }));
 
-describe('Home Page Hero', () => {
+describe('Home Page - Sorting Visualizer', () => {
 	beforeEach(() => {
-		// Reset the command palette store before each test
-		showCommandPalette.set(false);
+		vi.useFakeTimers();
 	});
 
 	afterEach(() => {
-		showCommandPalette.set(false);
+		vi.useRealTimers();
 	});
 
 	it('should render the main title', () => {
 		render(Page);
-		const title = screen.getByText('NebulaKit');
+		const title = screen.getByText('Sortalizer');
 		expect(title).toBeTruthy();
 	});
 
-	it('should render the subtitle with correct text', () => {
+	it('should render the tagline', () => {
 		render(Page);
-		const subtitle = screen.getByText(/A full-stack SvelteKit \+ Cloudflare starter/i);
-		expect(subtitle).toBeTruthy();
+		const tagline = screen.getByText('Watch algorithms think, one swap at a time');
+		expect(tagline).toBeTruthy();
 	});
 
-	it('should render the search input with placeholder', () => {
-		render(Page);
-		const searchInput = screen.getByPlaceholderText('Start typing or ask something...');
-		expect(searchInput).toBeTruthy();
-	});
-
-	it('should render all command options', () => {
-		render(Page);
-		expect(screen.getByText('Log in')).toBeTruthy();
-		expect(screen.getByText('Sign up')).toBeTruthy();
-		expect(screen.getByText('Ask something...')).toBeTruthy();
-	});
-
-	it('should navigate to login page when Log in is clicked', async () => {
-		render(Page);
-		const loginButton = screen.getByText('Log in').closest('button');
-		expect(loginButton).toBeTruthy();
-
-		if (loginButton) {
-			await fireEvent.click(loginButton);
-			expect(goto).toHaveBeenCalledWith('/auth/login');
-		}
-	});
-
-	it('should navigate to signup page when Sign up is clicked', async () => {
-		render(Page);
-		const signupButton = screen.getByText('Sign up').closest('button');
-		expect(signupButton).toBeTruthy();
-
-		if (signupButton) {
-			await fireEvent.click(signupButton);
-			expect(goto).toHaveBeenCalledWith('/auth/signup');
-		}
-	});
-
-	it('should navigate to chat page when Ask something is clicked', async () => {
-		render(Page);
-		const askButton = screen.getByText('Ask something...').closest('button');
-		expect(askButton).toBeTruthy();
-
-		if (askButton) {
-			await fireEvent.click(askButton);
-			expect(goto).toHaveBeenCalledWith('/chat');
-		}
-	});
-
-	it('should open command palette when search input is clicked', async () => {
-		render(Page);
-		const searchInput = screen.getByPlaceholderText(
-			'Start typing or ask something...'
-		) as HTMLInputElement;
-
-		await fireEvent.click(searchInput);
-
-		// Check if command palette store is set to true
-		expect(get(showCommandPalette)).toBe(true);
-	});
-
-	it('should open command palette when search input is focused', async () => {
-		render(Page);
-		const searchInput = screen.getByPlaceholderText('Start typing or ask something...');
-
-		await fireEvent.focus(searchInput);
-
-		// Check if command palette store is set to true
-		expect(get(showCommandPalette)).toBe(true);
-	});
-
-	it('should open command palette when typing in search input', async () => {
-		render(Page);
-		const searchInput = screen.getByPlaceholderText('Start typing or ask something...');
-
-		await fireEvent.keyDown(searchInput, { key: 'a' });
-
-		// Check if command palette store is set to true
-		expect(get(showCommandPalette)).toBe(true);
-	});
-
-	it('should render cosmic background elements', () => {
+	it('should render algorithm selection pills', () => {
 		const { container } = render(Page);
+		const pills = container.querySelectorAll('.pill');
+		expect(pills.length).toBe(6); // 6 algorithm pills
 
-		// Check for cosmic background
-		const cosmicBg = container.querySelector('.cosmic-bg');
-		expect(cosmicBg).toBeTruthy();
-
-		// Check for stars
-		const stars = container.querySelector('.stars-layer');
-		expect(stars).toBeTruthy();
-
-		// Check for planets
-		const planets = container.querySelectorAll('.planet');
-		expect(planets.length).toBeGreaterThan(0);
+		// Check pill names contain expected algorithms
+		const pillTexts = Array.from(pills).map(p => p.textContent?.trim());
+		expect(pillTexts).toContain('Bubble Sort');
+		expect(pillTexts).toContain('Insertion Sort');
+		expect(pillTexts).toContain('Selection Sort');
+		expect(pillTexts).toContain('Merge Sort');
+		expect(pillTexts).toContain('Quick Sort');
+		expect(pillTexts).toContain('Heap Sort');
 	});
 
-	it('should render AI indicator with animation bars', () => {
+	it('should have Bubble Sort selected by default', () => {
+		const { container } = render(Page);
+		const activePill = container.querySelector('.pill.active');
+		expect(activePill?.textContent?.trim()).toBe('Bubble Sort');
+	});
+
+	it('should render visualization bars', () => {
 		const { container } = render(Page);
 		const bars = container.querySelectorAll('.bar');
-		expect(bars.length).toBe(3);
+		expect(bars.length).toBe(23); // Default array size
 	});
 
-	it('should have accessible search input', () => {
+	it('should render playback controls', () => {
+		const { container } = render(Page);
+		const playBtn = container.querySelector('.btn-play');
+		expect(playBtn).toBeTruthy();
+	});
+
+	it('should render stats display', () => {
 		render(Page);
-		const searchInput = screen.getByLabelText('Search or ask a question');
-		expect(searchInput).toBeTruthy();
+		expect(screen.getByText('comparisons')).toBeTruthy();
+		expect(screen.getByText('swaps')).toBeTruthy();
+	});
+
+	it('should render algorithm info card', () => {
+		const { container } = render(Page);
+		// Check for algorithm card container
+		const algorithmCard = container.querySelector('.algorithm-card');
+		expect(algorithmCard).toBeTruthy();
+
+		// Check for algorithm description text
+		const description = container.querySelector('.algorithm-description');
+		expect(description).toBeTruthy();
+	});
+
+	it('should render color legend', () => {
+		render(Page);
+		expect(screen.getByText('Unsorted')).toBeTruthy();
+		expect(screen.getByText('Comparing')).toBeTruthy();
+		expect(screen.getByText('Swapping')).toBeTruthy();
+		expect(screen.getByText('Pivot')).toBeTruthy();
+		expect(screen.getByText('Sorted')).toBeTruthy();
+	});
+
+	it('should render keyboard shortcuts', () => {
+		render(Page);
+		expect(screen.getByText('Play/Pause')).toBeTruthy();
+		expect(screen.getByText('Reset')).toBeTruthy();
+		expect(screen.getByText('Mute')).toBeTruthy();
+	});
+
+	it('should change algorithm when clicking on pill', async () => {
+		const { container } = render(Page);
+		const pills = container.querySelectorAll('.pill');
+		const quickSortPill = Array.from(pills).find(p => p.textContent?.includes('Quick Sort'));
+
+		expect(quickSortPill).toBeTruthy();
+		if (quickSortPill) {
+			await fireEvent.click(quickSortPill);
+
+			const activePill = container.querySelector('.pill.active');
+			expect(activePill?.textContent?.trim()).toBe('Quick Sort');
+		}
+	});
+
+	it('should render settings panel by default', () => {
+		render(Page);
+		expect(screen.getByText('Array Size')).toBeTruthy();
+		expect(screen.getByText('Speed')).toBeTruthy();
+		expect(screen.getByText('Volume')).toBeTruthy();
+	});
+
+	it('should toggle settings panel visibility', async () => {
+		const { container } = render(Page);
+		const settingsBtn = container.querySelector('button[title="Settings"]');
+
+		expect(settingsBtn).toBeTruthy();
+		if (settingsBtn) {
+			// Settings panel visible by default
+			expect(container.querySelector('.settings-panel')).toBeTruthy();
+
+			// Click to hide
+			await fireEvent.click(settingsBtn);
+			expect(container.querySelector('.settings-panel')).toBeFalsy();
+
+			// Click to show again
+			await fireEvent.click(settingsBtn);
+			expect(container.querySelector('.settings-panel')).toBeTruthy();
+		}
+	});
+
+	it('should render animated background elements', () => {
+		const { container } = render(Page);
+		const bgEffects = container.querySelector('.bg-effects');
+		expect(bgEffects).toBeTruthy();
+
+		const orbs = container.querySelectorAll('.gradient-orb');
+		expect(orbs.length).toBe(3);
+	});
+
+	it('should render progress bar', () => {
+		const { container } = render(Page);
+		const progressContainer = container.querySelector('.progress-container');
+		const progressBar = container.querySelector('.progress-bar');
+		expect(progressContainer).toBeTruthy();
+		expect(progressBar).toBeTruthy();
+	});
+
+	it('should display complexity information for selected algorithm', () => {
+		const { container } = render(Page);
+		// Check for complexity details container
+		const complexityDetails = container.querySelector('.complexity-details');
+		expect(complexityDetails).toBeTruthy();
+
+		// Check for individual complexity items
+		const complexityItems = container.querySelectorAll('.complexity-item');
+		expect(complexityItems.length).toBe(3); // Best, Worst, Space
+	});
+});
+
+describe('Home Page - Accessibility', () => {
+	it('should have proper page title', () => {
+		render(Page);
+		// Check svelte:head sets proper title
+		expect(document.title).toContain('Sortalizer');
+	});
+
+	it('should have buttons with titles for accessibility', () => {
+		const { container } = render(Page);
+
+		const shuffleBtn = container.querySelector('button[title="Shuffle"]');
+		const resetBtn = container.querySelector('button[title="Reset (R)"]');
+		const muteBtn = container.querySelector('button[title="Toggle Sound (M)"]');
+		const settingsBtn = container.querySelector('button[title="Settings"]');
+
+		expect(shuffleBtn).toBeTruthy();
+		expect(resetBtn).toBeTruthy();
+		expect(muteBtn).toBeTruthy();
+		expect(settingsBtn).toBeTruthy();
 	});
 });

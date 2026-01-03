@@ -2,7 +2,9 @@
 
 ## 🎨 Overview
 
-NebulaKit uses a comprehensive CSS custom properties (CSS variables) system for theming. **All colors, spacing, typography, and design tokens MUST use CSS variables** - never hardcode values.
+Sortalizer uses a comprehensive CSS custom properties (CSS variables) system for
+theming. **All colors, spacing, typography, and design tokens MUST use CSS
+variables** - never hardcode values.
 
 ## 🚨 Critical Rules
 
@@ -131,8 +133,9 @@ Apply `data-theme="dark"` to `<html>` or any container:
 ### Typography
 
 ```css
---font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
---font-mono: 'Fira Code', 'Cascadia Code', Consolas, Monaco, monospace;
+--font-sans:
+	system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+--font-mono: "Fira Code", "Cascadia Code", Consolas, Monaco, monospace;
 ```
 
 ### Transitions
@@ -231,9 +234,9 @@ Apply `data-theme="dark"` to `<html>` or any container:
 All theme colors are validated in `tests/unit/theme-contrast.test.ts`:
 
 ```typescript
-import { validateThemeContrast } from '$lib/utils/contrast';
+import { validateThemeContrast } from "$lib/utils/contrast";
 
-const result = validateThemeContrast(theme, 'my-theme');
+const result = validateThemeContrast(theme, "my-theme");
 expect(result.isValid).toBe(true);
 ```
 
@@ -300,7 +303,7 @@ expect(result.isValid).toBe(true);
 	--color-my-new-color: #123456;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
 	--color-my-new-color: #654321;
 }
 ```
@@ -313,8 +316,8 @@ Update `scripts/validate-theme-contrast.cjs` if it's a text color:
 const themes = {
 	light: {
 		// ... existing colors
-		myNewColor: '#123456'
-	}
+		myNewColor: "#123456",
+	},
 };
 ```
 
@@ -344,15 +347,16 @@ export interface ThemeColors {
 
 ## 🚀 Quick Reference
 
-**Need a color?** → Check `src/app.css` first  
-**Color doesn't exist?** → Add to `app.css` for both themes  
-**Check contrast?** → `npm run validate:contrast`  
-**Test component?** → Toggle theme in app (Ctrl+K → "toggle theme")  
+**Need a color?** → Check `src/app.css` first\
+**Color doesn't exist?** → Add to `app.css` for both themes\
+**Check contrast?** → `npm run validate:contrast`\
+**Test component?** → Toggle theme in app (Ctrl+K → "toggle theme")\
 **Documentation?** → You're reading it! 📚
 
 ---
 
-**Remember:** Theme consistency is not optional. Using CSS variables everywhere ensures:
+**Remember:** Theme consistency is not optional. Using CSS variables everywhere
+ensures:
 
 - ✅ Dark mode works automatically
 - ✅ Consistent brand colors

@@ -23,7 +23,7 @@ export interface ChatHistoryState {
 	userId: string | null;
 }
 
-const STORAGE_KEY_PREFIX = 'nebulakit_chat_history';
+const STORAGE_KEY_PREFIX = 'sortalizer_chat_history';
 const MAX_TITLE_LENGTH = 50;
 
 function getStorageKey(userId: string | null): string {
@@ -163,7 +163,7 @@ function createChatHistoryStore() {
 
 		addMessage(
 			conversationId: string,
-			message: { role: 'user' | 'assistant' | 'system'; content: string }
+			message: { role: 'user' | 'assistant' | 'system'; content: string; }
 		): Message {
 			const newMessage: Message = {
 				id: generateId(),

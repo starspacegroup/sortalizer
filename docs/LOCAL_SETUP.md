@@ -1,4 +1,4 @@
-# Local Development Setup for NebulaKit
+# Local Development Setup for Sortalizer
 
 ## Database Migrations
 
@@ -7,7 +7,7 @@
 Apply database migrations to create all required tables:
 
 ```bash
-wrangler d1 execute nebulakit-db --local --file=migrations/schema.sql
+wrangler d1 execute sortalizer-db --local --file=migrations/schema.sql
 ```
 
 This creates:
@@ -20,12 +20,13 @@ This creates:
 Verify tables were created:
 
 ```bash
-wrangler d1 execute nebulakit-db --local --command="SELECT name FROM sqlite_master WHERE type='table';"
+wrangler d1 execute sortalizer-db --local --command="SELECT name FROM sqlite_master WHERE type='table';"
 ```
 
 ## KV Namespace Setup
 
-For local development with persistent KV storage, you need to create a preview KV namespace:
+For local development with persistent KV storage, you need to create a preview
+KV namespace:
 
 ### 1. Create KV Namespaces
 
@@ -42,12 +43,12 @@ wrangler kv:namespace create "KV" --preview
 After running the commands above, you'll get output like:
 
 ```
-🌀 Creating namespace with title "nebulakit-KV"
+🌀 Creating namespace with title "sortalizer-KV"
 ✨ Success!
 Add the following to your configuration file in your kv_namespaces array:
 { binding = "KV", id = "abc123..." }
 
-🌀 Creating namespace with title "nebulakit-KV_preview"
+🌀 Creating namespace with title "sortalizer-KV_preview"
 ✨ Success!
 Add the following to your configuration file in your kv_namespaces array:
 { binding = "KV", preview_id = "xyz789..." }
@@ -70,7 +71,8 @@ Run the dev server:
 npm run dev
 ```
 
-Now when you save GitHub OAuth credentials via `/setup`, they'll be stored in your local preview KV namespace and persist across dev server restarts!
+Now when you save GitHub OAuth credentials via `/setup`, they'll be stored in
+your local preview KV namespace and persist across dev server restarts!
 
 ### 4. Verify It's Working
 
@@ -105,4 +107,5 @@ wrangler secret put GITHUB_CLIENT_SECRET
 wrangler secret put GITHUB_OWNER_ID
 ```
 
-Or use the `/setup` page in production - credentials will be saved to your production KV namespace.
+Or use the `/setup` page in production - credentials will be saved to your
+production KV namespace.

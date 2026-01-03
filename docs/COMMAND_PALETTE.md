@@ -1,6 +1,7 @@
 # Command Palette
 
-The Command Palette is a keyboard-first interface for quickly navigating and executing commands within NebulaKit.
+The Command Palette is a keyboard-first interface for quickly navigating and
+executing commands within Sortalizer.
 
 ## Features
 
@@ -74,15 +75,15 @@ To add new commands, edit the `commands` array in `CommandPalette.svelte`:
 ```typescript
 const commands: Command[] = [
 	{
-		id: 'unique-id',
-		label: 'Command Label',
-		description: 'Description of what this command does',
+		id: "unique-id",
+		label: "Command Label",
+		description: "Description of what this command does",
 		action: () => {
 			// Your command logic here
-			goto('/your-route');
+			goto("/your-route");
 		},
-		icon: '🎨' // Emoji or SVG icon
-	}
+		icon: "🎨", // Emoji or SVG icon
+	},
 	// ... more commands
 ];
 ```
@@ -149,7 +150,8 @@ Potential improvements for the Command Palette:
 1. **Recent Commands**: Track and prioritize recently used commands
 2. **Command History**: Arrow up/down through previous searches
 3. **Categories**: Group commands by category
-4. **Custom Keyboard Shortcuts**: Per-command shortcuts (e.g., `Ctrl+H` for Home)
+4. **Custom Keyboard Shortcuts**: Per-command shortcuts (e.g., `Ctrl+H` for
+   Home)
 5. **Dynamic Commands**: Context-aware commands based on current page
 6. **Command Palette API**: Allow other components to register commands
 7. **Icons**: Replace emoji with proper icon library

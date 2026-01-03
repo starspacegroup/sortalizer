@@ -334,7 +334,7 @@
 </script>
 
 <svelte:head>
-	<title>AI Provider Keys - Admin - NebulaKit</title>
+	<title>AI Provider Keys - Admin - Sortalizer</title>
 </svelte:head>
 
 <div class="ai-keys-page">

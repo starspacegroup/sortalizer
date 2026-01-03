@@ -7,7 +7,8 @@
 	let userDropdownOpen = false;
 
 	export let onCommandPaletteClick: () => void = () => {};
-	export let hasAIProviders = false;
+	// Has AI providers configured (for showing chat link)
+	export let hasAIProviders: boolean = false;
 	export let user: {
 		id: string;
 		login: string;
@@ -50,7 +51,7 @@
 		<div class="nav-content">
 			<a href="/" class="logo" on:click={closeMobileMenu}>
 				<span class="logo-icon">✨</span>
-				<span class="logo-text">NebulaKit</span>
+				<span class="logo-text">Sortalizer</span>
 			</a>
 
 			<div class="nav-actions">
@@ -118,6 +119,15 @@
 
 			<div class="nav-links" class:open={mobileMenuOpen}>
 				{#if user}
+					{#if hasAIProviders}
+						<a
+							href="/chat"
+							class:active={$page.url.pathname.startsWith('/chat')}
+							on:click={closeMobileMenu}
+						>
+							Chat
+						</a>
+					{/if}
 					{#if user.isOwner}
 						<a
 							href="/admin"

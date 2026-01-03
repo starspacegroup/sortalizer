@@ -82,13 +82,6 @@
 				]
 			: []),
 		{
-			id: 'demo',
-			label: 'Demo',
-			description: 'View drag and drop demo',
-			action: () => goto('/demo'),
-			icon: '🎯'
-		},
-		{
 			id: 'login',
 			label: 'Sign In',
 			description: 'Go to login page',
