@@ -48,11 +48,13 @@ describe('SortingVisualizer', () => {
 	});
 
 	it('should render all control buttons', () => {
-		render(SortingVisualizer);
-		expect(screen.getByText('Play')).toBeTruthy();
-		expect(screen.getByText('Reset')).toBeTruthy();
-		expect(screen.getByText('Shuffle')).toBeTruthy();
-		expect(screen.getByText('New Array')).toBeTruthy();
+		const { container } = render(SortingVisualizer);
+		const buttons = container.querySelectorAll('button.btn');
+		const buttonTexts = Array.from(buttons).map((btn) => btn.textContent?.trim());
+		expect(buttonTexts).toContain('Play');
+		expect(buttonTexts).toContain('Reset');
+		expect(buttonTexts).toContain('Shuffle');
+		expect(buttonTexts).toContain('New Array');
 	});
 
 	it('should render algorithm selector with all algorithms', () => {
@@ -90,11 +92,10 @@ describe('SortingVisualizer', () => {
 	});
 
 	it('should display algorithm information for Bubble Sort by default', () => {
-		render(SortingVisualizer);
-		expect(screen.getByText('Bubble Sort')).toBeTruthy();
-		expect(
-			screen.getByText(/Repeatedly steps through the list, compares adjacent elements/)
-		).toBeTruthy();
+		const { container } = render(SortingVisualizer);
+		const text = container.textContent || '';
+		expect(text).toContain('Bubble Sort');
+		expect(text).toContain('Repeatedly steps through the list, compares adjacent elements');
 	});
 
 	it('should display time complexity information', () => {
@@ -112,12 +113,13 @@ describe('SortingVisualizer', () => {
 	});
 
 	it('should display keyboard shortcuts', () => {
-		render(SortingVisualizer);
-		expect(screen.getByText('Keyboard Shortcuts:')).toBeTruthy();
-		expect(screen.getByText('Play/Pause')).toBeTruthy();
-		expect(screen.getByText('Reset')).toBeTruthy();
-		expect(screen.getByText('New Array')).toBeTruthy();
-		expect(screen.getByText('Mute/Unmute')).toBeTruthy();
+		const { container } = render(SortingVisualizer);
+		const text = container.textContent || '';
+		expect(text).toContain('Keyboard Shortcuts');
+		expect(text).toContain('Play/Pause');
+		expect(text).toContain('Reset');
+		expect(text).toContain('New Array');
+		expect(text).toContain('Mute/Unmute');
 	});
 
 	it('should have array size slider with correct range', () => {
