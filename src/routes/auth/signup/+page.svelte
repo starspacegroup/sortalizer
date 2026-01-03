@@ -29,14 +29,14 @@
 </script>
 
 <svelte:head>
-	<title>Sign Up - NebulaKit</title>
+	<title>Sign Up - Sortalizer</title>
 </svelte:head>
 
 <div class="auth-page">
 	<div class="auth-container">
 		<div class="auth-header">
 			<h1>Create Account</h1>
-			<p>Start your journey with NebulaKit</p>
+			<p>Start your journey with Sortalizer</p>
 		</div>
 		
 		<div class="sso-buttons">

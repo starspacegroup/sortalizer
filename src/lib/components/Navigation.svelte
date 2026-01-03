@@ -50,7 +50,7 @@
 		<div class="nav-content">
 			<a href="/" class="logo" on:click={closeMobileMenu}>
 				<span class="logo-icon">✨</span>
-				<span class="logo-text">NebulaKit</span>
+				<span class="logo-text">Sortalizer</span>
 			</a>
 
 			<div class="nav-actions">
@@ -117,13 +117,6 @@
 			</button>
 
 			<div class="nav-links" class:open={mobileMenuOpen}>
-				<a
-					href="/visualizer"
-					class:active={$page.url.pathname === '/visualizer'}
-					on:click={closeMobileMenu}
-				>
-					Visualizer
-				</a>
 				{#if user}
 					{#if user.isOwner}
 						<a

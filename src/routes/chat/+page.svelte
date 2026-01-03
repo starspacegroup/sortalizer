@@ -22,7 +22,7 @@
 </script>
 
 <svelte:head>
-	<title>AI Chat - NebulaKit</title>
+	<title>AI Chat - Sortalizer</title>
 </svelte:head>
 
 <div class="chat-page-container">

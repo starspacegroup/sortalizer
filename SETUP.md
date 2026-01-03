@@ -1,4 +1,4 @@
-# NebulaKit Setup Guide
+# Sortalizer Setup Guide
 
 ## Prerequisites
 
@@ -10,26 +10,29 @@
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
-cd NebulaKit
+cd sortalizer
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Configure Cloudflare bindings:
    - Copy `wrangler.toml` and update with your Cloudflare resource IDs
-   - Create D1 database: `wrangler d1 create nebulakit-db`
+   - Create D1 database: `wrangler d1 create sortalizer-db`
    - Create KV namespace: `wrangler kv:namespace create "KV"`
-   - Create R2 bucket: `wrangler r2 bucket create nebulakit-files`
+   - Create R2 bucket: `wrangler r2 bucket create sortalizer-files`
    - Set up Turnstile at https://dash.cloudflare.com/
 
 ## Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -39,11 +42,13 @@ The app will be available at `http://localhost:5173`
 ## Building
 
 Build for production:
+
 ```bash
 npm run build
 ```
 
 Preview the production build:
+
 ```bash
 npm run preview
 ```
@@ -51,11 +56,13 @@ npm run preview
 ## Deployment to Cloudflare Pages
 
 1. Authenticate with Wrangler:
+
 ```bash
 wrangler login
 ```
 
 2. Deploy to Cloudflare Pages:
+
 ```bash
 npm run deploy
 ```
@@ -67,6 +74,7 @@ Or connect your GitHub repository to Cloudflare Pages for automatic deployments.
 ### D1 Database
 
 Create tables for your application:
+
 ```sql
 -- Users table
 CREATE TABLE users (
@@ -86,8 +94,9 @@ CREATE TABLE sessions (
 ```
 
 Run migrations:
+
 ```bash
-wrangler d1 execute nebulakit-db --file=./migrations/schema.sql
+wrangler d1 execute sortalizer-db --file=./migrations/schema.sql
 ```
 
 ### KV Namespace
@@ -97,6 +106,7 @@ Used for caching and session storage. No additional setup required.
 ### R2 Bucket
 
 Used for file uploads. Configure CORS if needed:
+
 ```json
 [
   {
@@ -109,7 +119,8 @@ Used for file uploads. Configure CORS if needed:
 
 ### Queues
 
-Configure background job processing. Messages are automatically processed by the worker.
+Configure background job processing. Messages are automatically processed by the
+worker.
 
 ### Turnstile
 
@@ -120,6 +131,7 @@ Configure background job processing. Messages are automatically processed by the
 ## Environment Variables
 
 Create a `.env` file for local development:
+
 ```
 TURNSTILE_SECRET_KEY=your-secret-key
 ```
@@ -129,7 +141,7 @@ For production, set these in Cloudflare Pages settings.
 ## Project Structure
 
 ```
-NebulaKit/
+Sortalizer/
 ├── src/
 │   ├── lib/
 │   │   ├── components/     # Reusable UI components

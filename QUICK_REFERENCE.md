@@ -1,4 +1,4 @@
-# NebulaKit Development Quick Reference
+# Sortalizer Development Quick Reference
 
 ## 🚀 Essential Commands
 
@@ -62,6 +62,7 @@ tests/
 ## 🎯 Coding Standards
 
 ### Naming Conventions
+
 - **Components**: `UserProfile.svelte` (PascalCase)
 - **Files**: `user-service.ts` (kebab-case)
 - **Functions**: `getUserData()` (camelCase)
@@ -69,10 +70,11 @@ tests/
 - **Types**: `User`, `ApiResponse` (PascalCase)
 
 ### TypeScript
+
 ```typescript
 // ✅ Good - Explicit types
 export function getUser(id: string): Promise<User> {
-  return db.query('SELECT * FROM users WHERE id = ?', [id]);
+  return db.query("SELECT * FROM users WHERE id = ?", [id]);
 }
 
 // ❌ Bad - Using 'any'
@@ -82,9 +84,10 @@ export function getUser(id: any): any {
 ```
 
 ### Database (D1)
+
 ```typescript
 // ✅ Good - Parameterized queries
-await platform.env.DB.prepare('SELECT * FROM users WHERE id = ?')
+await platform.env.DB.prepare("SELECT * FROM users WHERE id = ?")
   .bind(userId)
   .first();
 
@@ -98,20 +101,20 @@ await platform.env.DB.prepare(`SELECT * FROM users WHERE id = ${userId}`)
 ```typescript
 // D1 Database
 const result = await platform.env.DB
-  .prepare('SELECT * FROM table WHERE id = ?')
+  .prepare("SELECT * FROM table WHERE id = ?")
   .bind(id)
   .first();
 
 // KV Storage
-await platform.env.KV.put('key', 'value');
-const value = await platform.env.KV.get('key');
+await platform.env.KV.put("key", "value");
+const value = await platform.env.KV.get("key");
 
 // R2 Storage
-await platform.env.BUCKET.put('file.txt', data);
-const file = await platform.env.BUCKET.get('file.txt');
+await platform.env.BUCKET.put("file.txt", data);
+const file = await platform.env.BUCKET.get("file.txt");
 
 // Queues
-await platform.env.QUEUE.send({ message: 'data' });
+await platform.env.QUEUE.send({ message: "data" });
 ```
 
 ## 🎨 Theme System
@@ -135,48 +138,48 @@ await platform.env.QUEUE.send({ message: 'data' });
 ## 🧪 Test Examples
 
 ### Unit Test
-```typescript
-import { describe, it, expect } from 'vitest';
 
-describe('formatDate', () => {
-  it('should format ISO date string', () => {
-    expect(formatDate('2024-01-15')).toBe('January 15, 2024');
+```typescript
+import { describe, expect, it } from "vitest";
+
+describe("formatDate", () => {
+  it("should format ISO date string", () => {
+    expect(formatDate("2024-01-15")).toBe("January 15, 2024");
   });
 });
 ```
 
 ### Component Test
-```typescript
-import { render, screen } from '@testing-library/svelte';
-import Button from './Button.svelte';
 
-it('should render button with text', () => {
-  render(Button, { props: { label: 'Click me' } });
-  expect(screen.getByText('Click me')).toBeInTheDocument();
+```typescript
+import { render, screen } from "@testing-library/svelte";
+import Button from "./Button.svelte";
+
+it("should render button with text", () => {
+  render(Button, { props: { label: "Click me" } });
+  expect(screen.getByText("Click me")).toBeInTheDocument();
 });
 ```
 
 ### E2E Test
-```typescript
-import { test, expect } from '@playwright/test';
 
-test('should navigate to page', async ({ page }) => {
-  await page.goto('/');
+```typescript
+import { expect, test } from "@playwright/test";
+
+test("should navigate to page", async ({ page }) => {
+  await page.goto("/");
   await page.click('a[href="/about"]');
-  await expect(page).toHaveURL('/about');
+  await expect(page).toHaveURL("/about");
 });
 ```
 
 ## 🚫 What NOT to Do
 
-❌ Start coding before writing tests
-❌ Add external packages without justification  
-❌ Use `any` type in TypeScript
-❌ Hardcode colors or configuration
-❌ Use Node.js-specific APIs (Workers runtime)
-❌ Skip test coverage checks
-❌ Commit without running tests
-❌ String concatenation for SQL queries
+❌ Start coding before writing tests ❌ Add external packages without
+justification\
+❌ Use `any` type in TypeScript ❌ Hardcode colors or configuration ❌ Use
+Node.js-specific APIs (Workers runtime) ❌ Skip test coverage checks ❌ Commit
+without running tests ❌ String concatenation for SQL queries
 
 ## 🎯 Package Management
 
@@ -236,10 +239,11 @@ npm run test:e2e:ui
 ---
 
 **Golden Rules**:
+
 1. ✅ Tests first, always
 2. ✅ 90%+ coverage, no exceptions
 3. ✅ Build over buy
 4. ✅ Cloudflare first
 5. ✅ Type safety everywhere
 
-*Happy coding! 🚀*
+_Happy coding! 🚀_

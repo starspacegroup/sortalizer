@@ -70,7 +70,7 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 			headers: {
 				Authorization: `Bearer ${accessToken}`,
 				Accept: 'application/vnd.github.v3+json',
-				'User-Agent': 'NebulaKit'
+				'User-Agent': 'Sortalizer'
 			}
 		});
 
@@ -109,7 +109,7 @@ export const GET: RequestHandler = async ({ url, cookies, platform }) => {
 					'SELECT id, is_admin FROM users WHERE id = ?'
 				)
 					.bind(githubUser.id.toString())
-					.first<{ id: string; is_admin: number }>();
+					.first<{ id: string; is_admin: number; }>();
 
 				if (existingUser) {
 					// Update existing user

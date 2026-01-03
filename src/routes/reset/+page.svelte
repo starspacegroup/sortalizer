@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-	<title>Reset Configuration - NebulaKit</title>
+	<title>Reset Configuration - Sortalizer</title>
 </svelte:head>
 
 <div class="container">

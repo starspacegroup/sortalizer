@@ -1,6 +1,6 @@
 # Test-Driven Development (TDD) Workflow
 
-This guide demonstrates the TDD workflow for NebulaKit development.
+This guide demonstrates the TDD workflow for Sortalizer development.
 
 ## 🎯 The TDD Cycle
 
@@ -36,42 +36,43 @@ Let's implement a simple user validation utility using TDD.
 **File**: `src/lib/utils/validation.test.ts`
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { isValidEmail, isValidPassword } from './validation';
+import { describe, expect, it } from "vitest";
+import { isValidEmail, isValidPassword } from "./validation";
 
-describe('Email Validation', () => {
-  it('should accept valid email addresses', () => {
-    expect(isValidEmail('user@example.com')).toBe(true);
-    expect(isValidEmail('test.user@domain.co.uk')).toBe(true);
+describe("Email Validation", () => {
+  it("should accept valid email addresses", () => {
+    expect(isValidEmail("user@example.com")).toBe(true);
+    expect(isValidEmail("test.user@domain.co.uk")).toBe(true);
   });
 
-  it('should reject invalid email addresses', () => {
-    expect(isValidEmail('invalid')).toBe(false);
-    expect(isValidEmail('user@')).toBe(false);
-    expect(isValidEmail('@domain.com')).toBe(false);
-    expect(isValidEmail('')).toBe(false);
+  it("should reject invalid email addresses", () => {
+    expect(isValidEmail("invalid")).toBe(false);
+    expect(isValidEmail("user@")).toBe(false);
+    expect(isValidEmail("@domain.com")).toBe(false);
+    expect(isValidEmail("")).toBe(false);
   });
 });
 
-describe('Password Validation', () => {
-  it('should accept strong passwords', () => {
-    expect(isValidPassword('MyP@ssw0rd123')).toBe(true);
+describe("Password Validation", () => {
+  it("should accept strong passwords", () => {
+    expect(isValidPassword("MyP@ssw0rd123")).toBe(true);
   });
 
-  it('should reject weak passwords', () => {
-    expect(isValidPassword('weak')).toBe(false);
-    expect(isValidPassword('12345678')).toBe(false);
-    expect(isValidPassword('noNumbers!')).toBe(false);
+  it("should reject weak passwords", () => {
+    expect(isValidPassword("weak")).toBe(false);
+    expect(isValidPassword("12345678")).toBe(false);
+    expect(isValidPassword("noNumbers!")).toBe(false);
   });
 
-  it('should require minimum 8 characters', () => {
-    expect(isValidPassword('Short1!')).toBe(false);
-    expect(isValidPassword('LongEnough1!')).toBe(true);
+  it("should require minimum 8 characters", () => {
+    expect(isValidPassword("Short1!")).toBe(false);
+    expect(isValidPassword("LongEnough1!")).toBe(true);
   });
 });
 ```
 
 **Run the test** (it should fail):
+
 ```bash
 npm run test
 ```
@@ -87,10 +88,10 @@ Expected output: ❌ Module not found errors
  * Validates email address format
  */
 export function isValidEmail(email: string): boolean {
-  if (!email || typeof email !== 'string') {
+  if (!email || typeof email !== "string") {
     return false;
   }
-  
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
@@ -100,23 +101,24 @@ export function isValidEmail(email: string): boolean {
  * Requirements: minimum 8 characters, at least one number, one letter, one special char
  */
 export function isValidPassword(password: string): boolean {
-  if (!password || typeof password !== 'string') {
+  if (!password || typeof password !== "string") {
     return false;
   }
-  
+
   if (password.length < 8) {
     return false;
   }
-  
+
   const hasNumber = /\d/.test(password);
   const hasLetter = /[a-zA-Z]/.test(password);
   const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
-  
+
   return hasNumber && hasLetter && hasSpecial;
 }
 ```
 
 **Run the test** (should pass):
+
 ```bash
 npm run test
 ```
@@ -136,7 +138,7 @@ const PASSWORD_MIN_LENGTH = 8;
 const PASSWORD_PATTERNS = {
   number: /\d/,
   letter: /[a-zA-Z]/,
-  special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+  special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
 };
 
 /**
@@ -145,38 +147,41 @@ const PASSWORD_PATTERNS = {
  * @returns True if email is valid, false otherwise
  */
 export function isValidEmail(email: string): boolean {
-  if (!email || typeof email !== 'string') {
+  if (!email || typeof email !== "string") {
     return false;
   }
-  
+
   return EMAIL_REGEX.test(email.trim());
 }
 
 /**
  * Validates password strength
- * Requirements: 
+ * Requirements:
  * - Minimum 8 characters
  * - At least one number
  * - At least one letter
  * - At least one special character
- * 
+ *
  * @param password - Password to validate
  * @returns True if password meets requirements, false otherwise
  */
 export function isValidPassword(password: string): boolean {
-  if (!password || typeof password !== 'string') {
+  if (!password || typeof password !== "string") {
     return false;
   }
-  
+
   if (password.length < PASSWORD_MIN_LENGTH) {
     return false;
   }
-  
-  return Object.values(PASSWORD_PATTERNS).every(pattern => pattern.test(password));
+
+  return Object.values(PASSWORD_PATTERNS).every((pattern) =>
+    pattern.test(password)
+  );
 }
 ```
 
 **Run tests again** (should still pass):
+
 ```bash
 npm run test
 ```
@@ -184,6 +189,7 @@ npm run test
 Expected output: ✅ All tests passing
 
 **Check coverage**:
+
 ```bash
 npm run test:coverage
 ```
@@ -197,51 +203,53 @@ Expected: 100% coverage on validation.ts
 **File**: `src/lib/components/EmailInput.test.ts`
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/svelte';
-import EmailInput from './EmailInput.svelte';
+import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/svelte";
+import EmailInput from "./EmailInput.svelte";
 
-describe('EmailInput', () => {
-  it('should render email input field', () => {
+describe("EmailInput", () => {
+  it("should render email input field", () => {
     render(EmailInput);
-    const input = screen.getByRole('textbox', { name: /email/i });
+    const input = screen.getByRole("textbox", { name: /email/i });
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('type', 'email');
+    expect(input).toHaveAttribute("type", "email");
   });
 
-  it('should show error for invalid email', async () => {
+  it("should show error for invalid email", async () => {
     render(EmailInput);
-    const input = screen.getByRole('textbox', { name: /email/i });
-    
-    await fireEvent.input(input, { target: { value: 'invalid' } });
+    const input = screen.getByRole("textbox", { name: /email/i });
+
+    await fireEvent.input(input, { target: { value: "invalid" } });
     await fireEvent.blur(input);
-    
+
     const error = screen.getByText(/invalid email/i);
     expect(error).toBeInTheDocument();
   });
 
-  it('should not show error for valid email', async () => {
+  it("should not show error for valid email", async () => {
     render(EmailInput);
-    const input = screen.getByRole('textbox', { name: /email/i });
-    
-    await fireEvent.input(input, { target: { value: 'user@example.com' } });
+    const input = screen.getByRole("textbox", { name: /email/i });
+
+    await fireEvent.input(input, { target: { value: "user@example.com" } });
     await fireEvent.blur(input);
-    
+
     expect(screen.queryByText(/invalid email/i)).not.toBeInTheDocument();
   });
 
-  it('should call onChange callback with value', async () => {
-    let receivedValue = '';
+  it("should call onChange callback with value", async () => {
+    let receivedValue = "";
     render(EmailInput, {
       props: {
-        onChange: (value: string) => { receivedValue = value; }
-      }
+        onChange: (value: string) => {
+          receivedValue = value;
+        },
+      },
     });
-    
-    const input = screen.getByRole('textbox', { name: /email/i });
-    await fireEvent.input(input, { target: { value: 'test@test.com' } });
-    
-    expect(receivedValue).toBe('test@test.com');
+
+    const input = screen.getByRole("textbox", { name: /email/i });
+    await fireEvent.input(input, { target: { value: "test@test.com" } });
+
+    expect(receivedValue).toBe("test@test.com");
   });
 });
 ```
@@ -347,81 +355,81 @@ Add TypeScript types, improve accessibility, extract styles to CSS variables.
 **File**: `src/routes/api/users/+server.test.ts`
 
 ```typescript
-import { describe, it, expect, beforeEach } from 'vitest';
-import { GET, POST } from './+server';
-import { createMockPlatform } from '../../../../tests/fixtures';
+import { beforeEach, describe, expect, it } from "vitest";
+import { GET, POST } from "./+server";
+import { createMockPlatform } from "../../../../tests/fixtures";
 
-describe('Users API', () => {
+describe("Users API", () => {
   let mockPlatform: ReturnType<typeof createMockPlatform>;
-  
+
   beforeEach(() => {
     mockPlatform = createMockPlatform();
   });
 
-  describe('GET /api/users', () => {
-    it('should return list of users', async () => {
-      const request = new Request('http://localhost/api/users');
-      const response = await GET({ 
-        request, 
+  describe("GET /api/users", () => {
+    it("should return list of users", async () => {
+      const request = new Request("http://localhost/api/users");
+      const response = await GET({
+        request,
         platform: mockPlatform,
-        locals: { user: { id: '1' } }
+        locals: { user: { id: "1" } },
       } as any);
-      
+
       const data = await response.json();
       expect(response.status).toBe(200);
       expect(data.users).toBeDefined();
       expect(Array.isArray(data.users)).toBe(true);
     });
 
-    it('should require authentication', async () => {
-      const request = new Request('http://localhost/api/users');
-      
+    it("should require authentication", async () => {
+      const request = new Request("http://localhost/api/users");
+
       await expect(async () => {
-        await GET({ 
-          request, 
+        await GET({
+          request,
           platform: mockPlatform,
-          locals: {}
+          locals: {},
         } as any);
       }).rejects.toThrow();
     });
   });
 
-  describe('POST /api/users', () => {
-    it('should create new user', async () => {
-      const userData = { 
-        email: 'new@example.com',
-        name: 'New User'
+  describe("POST /api/users", () => {
+    it("should create new user", async () => {
+      const userData = {
+        email: "new@example.com",
+        name: "New User",
       };
-      
-      const request = new Request('http://localhost/api/users', {
-        method: 'POST',
+
+      const request = new Request("http://localhost/api/users", {
+        method: "POST",
         body: JSON.stringify(userData),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
-      
-      const response = await POST({ 
-        request, 
+
+      const response = await POST({
+        request,
         platform: mockPlatform,
-        locals: { user: { id: '1' } }
+        locals: { user: { id: "1" } },
       } as any);
-      
+
       expect(response.status).toBe(201);
     });
 
-    it('should validate user data', async () => {
-      const invalidData = { email: 'invalid' };
-      
-      const request = new Request('http://localhost/api/users', {
-        method: 'POST',
+    it("should validate user data", async () => {
+      const invalidData = { email: "invalid" };
+
+      const request = new Request("http://localhost/api/users", {
+        method: "POST",
         body: JSON.stringify(invalidData),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
-      
+
       await expect(async () => {
-        await POST({ 
-          request, 
+        await POST({
+          request,
           platform: mockPlatform,
-          locals: { user: { id: '1' } }
+          locals: { user: { id: "1" } },
         } as any);
       }).rejects.toThrow(/validation/i);
     });
@@ -434,35 +442,35 @@ describe('Users API', () => {
 **File**: `tests/e2e/user-registration.test.ts`
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { expect, test } from "@playwright/test";
 
-test.describe('User Registration Flow', () => {
-  test('should complete full registration', async ({ page }) => {
+test.describe("User Registration Flow", () => {
+  test("should complete full registration", async ({ page }) => {
     // Navigate to signup
-    await page.goto('/auth/signup');
-    
+    await page.goto("/auth/signup");
+
     // Fill form
-    await page.fill('input[type="email"]', 'newuser@example.com');
-    await page.fill('input[name="password"]', 'SecureP@ss123');
-    await page.fill('input[name="confirmPassword"]', 'SecureP@ss123');
-    
+    await page.fill('input[type="email"]', "newuser@example.com");
+    await page.fill('input[name="password"]', "SecureP@ss123");
+    await page.fill('input[name="confirmPassword"]', "SecureP@ss123");
+
     // Submit
     await page.click('button[type="submit"]');
-    
+
     // Should redirect to dashboard
-    await expect(page).toHaveURL('/dashboard');
-    await expect(page.locator('h1')).toContainText('Welcome');
+    await expect(page).toHaveURL("/dashboard");
+    await expect(page.locator("h1")).toContainText("Welcome");
   });
 
-  test('should show validation errors', async ({ page }) => {
-    await page.goto('/auth/signup');
-    
-    await page.fill('input[type="email"]', 'invalid');
-    await page.fill('input[name="password"]', 'weak');
+  test("should show validation errors", async ({ page }) => {
+    await page.goto("/auth/signup");
+
+    await page.fill('input[type="email"]', "invalid");
+    await page.fill('input[name="password"]', "weak");
     await page.click('button[type="submit"]');
-    
-    await expect(page.locator('text=/invalid email/i')).toBeVisible();
-    await expect(page.locator('text=/password.*weak/i')).toBeVisible();
+
+    await expect(page.locator("text=/invalid email/i")).toBeVisible();
+    await expect(page.locator("text=/password.*weak/i")).toBeVisible();
   });
 });
 ```
@@ -485,7 +493,8 @@ npm run test:e2e
 
 ## 📊 Coverage Reports
 
-After running `npm run test:coverage`, open `coverage/index.html` in your browser to see detailed coverage reports.
+After running `npm run test:coverage`, open `coverage/index.html` in your
+browser to see detailed coverage reports.
 
 ## ✅ Best Practices
 
@@ -500,13 +509,9 @@ After running `npm run test:coverage`, open `coverage/index.html` in your browse
 
 ## 🚫 Common Mistakes
 
-❌ Writing code before tests
-❌ Testing implementation details
-❌ Skipping edge cases
-❌ Ignoring failing tests
-❌ Not running tests before commit
-❌ Large, complex tests
-❌ No assertions in tests
+❌ Writing code before tests ❌ Testing implementation details ❌ Skipping edge
+cases ❌ Ignoring failing tests ❌ Not running tests before commit ❌ Large,
+complex tests ❌ No assertions in tests
 
 ## 📚 Resources
 
@@ -516,4 +521,5 @@ After running `npm run test:coverage`, open `coverage/index.html` in your browse
 
 ---
 
-**Remember**: Tests are not just verification—they're documentation, design tools, and safety nets. Write them first! 🧪
+**Remember**: Tests are not just verification—they're documentation, design
+tools, and safety nets. Write them first! 🧪

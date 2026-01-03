@@ -129,7 +129,7 @@
 </script>
 
 <svelte:head>
-	<title>Demo - NebulaKit</title>
+	<title>Demo - Sortalizer</title>
 </svelte:head>
 
 <div class="demo-page">

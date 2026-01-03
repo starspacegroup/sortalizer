@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Sorting Algorithm Visualizer | NebulaKit</title>
+	<title>Sorting Algorithm Visualizer | Sortalizer</title>
 	<meta
 		name="description"
 		content="Interactive sorting algorithm visualizer with sound. Watch bubble sort, merge sort, quick sort and more in action."

@@ -161,7 +161,7 @@
 </script>
 
 <svelte:head>
-	<title>Authentication Keys - Admin - NebulaKit</title>
+	<title>Authentication Keys - Admin - Sortalizer</title>
 </svelte:head>
 
 <div class="auth-keys-page">
