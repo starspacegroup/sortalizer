@@ -119,6 +119,15 @@
 
 			<div class="nav-links" class:open={mobileMenuOpen}>
 				{#if user}
+					{#if hasAIProviders}
+						<a
+							href="/chat"
+							class:active={$page.url.pathname.startsWith('/chat')}
+							on:click={closeMobileMenu}
+						>
+							Chat
+						</a>
+					{/if}
 					{#if user.isOwner}
 						<a
 							href="/admin"
