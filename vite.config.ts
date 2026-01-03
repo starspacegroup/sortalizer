@@ -1,9 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [sveltekit()],
+	plugins: [sveltekit(), svelteTesting()],
+	css: {
+		// Disable CSS preprocessing in test environment to avoid color-mix() compatibility issues
+		// between Vite 6 and Vitest 2's vite-node
+		devSourcemap: false
+	},
 	test: {
+		css: false,
 		include: ['src/**/*.{test,spec}.{js,ts}', 'tests/**/*.{test,spec}.{js,ts}'],
 		exclude: ['node_modules', 'tests/e2e/**'],
 		environment: 'happy-dom',

@@ -15,20 +15,20 @@
 	import { SoundGenerator } from '$lib/services/soundGenerator';
 
 	// State
-	let array: number[] = generateRandomArray(50);
+	let array: number[] = generateRandomArray(23);
 	let steps: SortStep[] = [];
 	let currentStep = 0;
 	let isPlaying = false;
 	let isSorted = false;
 	let selectedAlgorithm = 'bubble';
-	let arraySize = 50;
-	let speed = 50; // 0-100 scale: 0 = slowest (500ms), 100 = fastest (1ms)
+	let arraySize = 23;
+	let speed = 100; // 0-100 scale: 0 = slowest (500ms), 100 = fastest (1ms)
 	let comparisons = 0;
 	let swaps = 0;
 
 	// Sound generator
 	let soundGenerator: SoundGenerator;
-	let volume = 0.3;
+	let volume = 0.05;
 	let muted = false;
 
 	// Animation state

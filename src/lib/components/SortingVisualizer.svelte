@@ -15,16 +15,24 @@
 	import { SoundGenerator } from '$lib/services/soundGenerator';
 
 	// State
-	let array: number[] = generateRandomArray(50);
+	let array: number[] = generateRandomArray(23);
 	let steps: SortStep[] = [];
 	let currentStep = 0;
 	let isPlaying = false;
 	let isSorted = false;
 	let selectedAlgorithm = 'bubble';
-	let arraySize = 50;
-	let speed = 50; // ms per step
+	let arraySize = 23;
+	let speed = 100; // Speed percentage (100 = fastest)
 	let comparisons = 0;
 	let swaps = 0;
+
+	// Convert speed percentage to delay in ms (100% = 1ms, 0% = 500ms)
+	$: delay = Math.max(1, Math.round(500 - (speed / 100) * 499));
+
+	// Restart animation when delay changes during playback
+	$: if (delay && isPlaying) {
+		playAnimation();
+	}
 
 	// Sound generator
 	let soundGenerator: SoundGenerator;
@@ -178,7 +186,7 @@
 			}
 
 			currentStep++;
-		}, speed);
+		}, delay);
 	}
 
 	function handleSpeedChange(e: Event) {
@@ -190,9 +198,7 @@
 		}
 	}
 
-	function handleArraySizeChange(e: Event) {
-		const target = e.target as HTMLInputElement;
-		arraySize = parseInt(target.value);
+	function handleArraySizeChange() {
 		generateNewArray();
 	}
 
@@ -282,8 +288,9 @@
 				type="range"
 				min="10"
 				max="200"
-				value={arraySize}
-				on:input={handleArraySizeChange}
+				autocomplete="off"
+				bind:value={arraySize}
+				on:change={handleArraySizeChange}
 				disabled={isPlaying}
 			/>
 		</div>
@@ -291,15 +298,15 @@
 		<!-- Speed -->
 		<div class="control-group">
 			<label for="speed">
-				Speed: <span class="value">{speed}ms</span>
+				Speed: <span class="value">{speed}%</span>
 			</label>
 			<input
 				id="speed"
 				type="range"
 				min="1"
-				max="500"
-				value={speed}
-				on:input={handleSpeedChange}
+				max="100"
+				autocomplete="off"
+				bind:value={speed}
 			/>
 		</div>
 

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/svelte';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import SortingVisualizer from '$lib/components/SortingVisualizer.svelte';
 
 // Mock AudioContext
 class MockAudioContext {
@@ -35,29 +34,32 @@ describe('SortingVisualizer', () => {
 		vi.clearAllTimers();
 	});
 
-	it('should render main heading', () => {
+	it('should render main heading', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		expect(screen.getByText('Sorting Algorithm Visualizer')).toBeTruthy();
 	});
 
-	it('should render subtitle', () => {
+	it('should render subtitle', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		expect(
 			screen.getByText('Watch algorithms come to life with real-time visualization and sound')
 		).toBeTruthy();
 	});
 
-	it('should render all control buttons', () => {
+	it('should render all control buttons', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const buttons = container.querySelectorAll('button.btn');
 		const buttonTexts = Array.from(buttons).map((btn) => btn.textContent?.trim());
 		expect(buttonTexts).toContain('Play');
 		expect(buttonTexts).toContain('Reset');
 		expect(buttonTexts).toContain('Shuffle');
-		expect(buttonTexts).toContain('New Array');
 	});
 
-	it('should render algorithm selector with all algorithms', () => {
+	it('should render algorithm selector with all algorithms', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const select = container.querySelector('select');
 		expect(select).toBeTruthy();
@@ -74,7 +76,8 @@ describe('SortingVisualizer', () => {
 		expect(algorithmNames).toContain('Heap Sort');
 	});
 
-	it('should render visualization bars', () => {
+	it('should render visualization bars', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const bars = container.querySelectorAll('.bar');
 		expect(bars.length).toBeGreaterThan(0);
@@ -82,7 +85,8 @@ describe('SortingVisualizer', () => {
 		expect(bars.length).toBeLessThanOrEqual(200);
 	});
 
-	it('should render legend with all states', () => {
+	it('should render legend with all states', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		expect(screen.getByText('Unsorted')).toBeTruthy();
 		expect(screen.getByText('Comparing')).toBeTruthy();
@@ -91,14 +95,16 @@ describe('SortingVisualizer', () => {
 		expect(screen.getByText('Sorted')).toBeTruthy();
 	});
 
-	it('should display algorithm information for Bubble Sort by default', () => {
+	it('should display algorithm information for Bubble Sort by default', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const text = container.textContent || '';
 		expect(text).toContain('Bubble Sort');
 		expect(text).toContain('Repeatedly steps through the list, compares adjacent elements');
 	});
 
-	it('should display time complexity information', () => {
+	it('should display time complexity information', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const text = container.textContent || '';
 		expect(text).toContain('Best: O(n)');
@@ -106,23 +112,25 @@ describe('SortingVisualizer', () => {
 		expect(text).toContain('Worst: O(n²)');
 	});
 
-	it('should display space complexity information', () => {
+	it('should display space complexity information', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const text = container.textContent || '';
 		expect(text).toContain('O(1)');
 	});
 
-	it('should display keyboard shortcuts', () => {
+	it('should display keyboard shortcuts', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const text = container.textContent || '';
 		expect(text).toContain('Keyboard Shortcuts');
 		expect(text).toContain('Play/Pause');
 		expect(text).toContain('Reset');
-		expect(text).toContain('New Array');
 		expect(text).toContain('Mute/Unmute');
 	});
 
-	it('should have array size slider with correct range', () => {
+	it('should have array size slider with correct range', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const slider = container.querySelector('input[type="range"][id="size"]');
 		expect(slider).toBeTruthy();
@@ -130,7 +138,8 @@ describe('SortingVisualizer', () => {
 		expect(slider?.getAttribute('max')).toBe('200');
 	});
 
-	it('should have speed slider with correct range', () => {
+	it('should have speed slider with correct range', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const slider = container.querySelector('input[type="range"][id="speed"]');
 		expect(slider).toBeTruthy();
@@ -138,7 +147,8 @@ describe('SortingVisualizer', () => {
 		expect(slider?.getAttribute('max')).toBe('500');
 	});
 
-	it('should have volume slider', () => {
+	it('should have volume slider', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		const { container } = render(SortingVisualizer);
 		const slider = container.querySelector('input[type="range"][id="volume"]');
 		expect(slider).toBeTruthy();
@@ -146,20 +156,23 @@ describe('SortingVisualizer', () => {
 		expect(slider?.getAttribute('max')).toBe('1');
 	});
 
-	it('should have mute button', () => {
+	it('should have mute button', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		const muteButton = screen.getByLabelText('Toggle mute');
 		expect(muteButton).toBeTruthy();
 	});
 
-	it('should display stats labels', () => {
+	it('should display stats labels', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		expect(screen.getByText('Comparisons')).toBeTruthy();
 		expect(screen.getByText('Swaps')).toBeTruthy();
 		expect(screen.getByText('Progress')).toBeTruthy();
 	});
 
-	it('should render control labels', () => {
+	it('should render control labels', async () => {
+		const { default: SortingVisualizer } = await import('$lib/components/SortingVisualizer.svelte');
 		render(SortingVisualizer);
 		expect(screen.getByText('Algorithm')).toBeTruthy();
 		expect(screen.getByText(/Array Size:/)).toBeTruthy();

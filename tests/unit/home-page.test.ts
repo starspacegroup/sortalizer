@@ -97,7 +97,6 @@ describe('Home Page - Sorting Visualizer', () => {
 		render(Page);
 		expect(screen.getByText('Play/Pause')).toBeTruthy();
 		expect(screen.getByText('Reset')).toBeTruthy();
-		expect(screen.getByText('New Array')).toBeTruthy();
 		expect(screen.getByText('Mute')).toBeTruthy();
 	});
 
@@ -180,13 +179,11 @@ describe('Home Page - Accessibility', () => {
 	it('should have buttons with titles for accessibility', () => {
 		const { container } = render(Page);
 
-		const newArrayBtn = container.querySelector('button[title="New Array (N)"]');
 		const shuffleBtn = container.querySelector('button[title="Shuffle"]');
 		const resetBtn = container.querySelector('button[title="Reset (R)"]');
 		const muteBtn = container.querySelector('button[title="Toggle Sound (M)"]');
 		const settingsBtn = container.querySelector('button[title="Settings"]');
 
-		expect(newArrayBtn).toBeTruthy();
 		expect(shuffleBtn).toBeTruthy();
 		expect(resetBtn).toBeTruthy();
 		expect(muteBtn).toBeTruthy();

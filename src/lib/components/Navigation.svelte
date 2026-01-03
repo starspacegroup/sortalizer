@@ -7,8 +7,8 @@
 	let userDropdownOpen = false;
 
 	export let onCommandPaletteClick: () => void = () => {};
-	// Exported for external reference
-	export const hasAIProviders = false;
+	// Has AI providers configured (for showing chat link)
+	export let hasAIProviders: boolean = false;
 	export let user: {
 		id: string;
 		login: string;
