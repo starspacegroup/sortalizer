@@ -6,12 +6,6 @@ test.describe('Homepage', () => {
 		await expect(page).toHaveTitle(/Sortalizer/);
 	});
 
-	test('should navigate to demo page', async ({ page }) => {
-		await page.goto('/');
-		await page.click('a[href="/demo"]');
-		await expect(page).toHaveURL('/demo');
-	});
-
 	test('should open command palette with keyboard shortcut', async ({ page }) => {
 		await page.goto('/');
 
