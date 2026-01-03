@@ -122,15 +122,20 @@
 				<div class="conversation-group" in:slide={{ duration: 200 }}>
 					<div class="group-label">{group.label}</div>
 					{#each group.conversations as conversation (conversation.id)}
-						<button
+						<!-- svelte-ignore a11y-no-static-element-interactions -->
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<div
 							class="conversation-item"
 							class:selected={conversation.id === currentId}
 							data-conversation-id={conversation.id}
 							data-selected={conversation.id === currentId}
 							on:click={() => handleSelectConversation(conversation.id)}
+							role="button"
+							tabindex="0"
 							aria-label="Select conversation: {conversation.title}"
 							title={conversation.title}
 							in:fly={{ x: -20, duration: 200, easing: quintOut }}
+							on:keydown={(e) => e.key === 'Enter' && handleSelectConversation(conversation.id)}
 						>
 							<svg
 								class="conversation-icon"
@@ -168,7 +173,7 @@
 									/>
 								</svg>
 							</button>
-						</button>
+						</div>
 					{/each}
 				</div>
 			{/each}

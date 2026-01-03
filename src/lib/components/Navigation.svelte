@@ -7,8 +7,8 @@
 	let userDropdownOpen = false;
 
 	export let onCommandPaletteClick: () => void = () => {};
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	export let hasAIProviders = false;
+	// Exported for external reference
+	export const hasAIProviders = false;
 	export let user: {
 		id: string;
 		login: string;
